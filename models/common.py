@@ -316,7 +316,7 @@ class DetectMultiBackend(nn.Module):
             LOGGER.info(f'Loading {w} for ONNX Runtime inference...')
             check_requirements(('onnx', 'onnxruntime-gpu' if torch.has_cuda else 'onnxruntime'))
             import onnxruntime
-            session = onnxruntime.InferenceSession(w, None)
+            session = onnxruntime.InferenceSession(w, None, providers=['CUDAExecutionProvider'])
         else:  # TensorFlow model (TFLite, pb, saved_model)
             import tensorflow as tf
             if pb:  # https://www.tensorflow.org/guide/migrate#a_graphpb_or_graphpbtxt
